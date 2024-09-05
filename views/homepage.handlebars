@@ -1,7 +1,13 @@
-<!-- Loop over each object in the projects array -->
-{{#each blogs as |blog| }}
-<div class="blog-container">
-        <h2>{{blog.title}}</h2>
-        <p>{{blog.content}}</p>
-</div>
-{{/each}}
+
+  
+  <main>
+    <h2>Blog Posts</h2>
+    <ul>
+      {{#each blogs}}
+      <li>
+        <a href="/blog/{{id}}">{{title}}</a>
+        <p>Created by {{user.name}} on {{format_date date_created}}</p>
+      </li>
+      {{/each}}
+    </ul>
+  </main>

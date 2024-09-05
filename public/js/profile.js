@@ -37,6 +37,13 @@ const newFormHandler = async (event) => {
     }
   };
   
+  const updateButtonHandler = async (event) => {
+    if (event.target.classList.contains('update-btn')) {
+      const id = event.target.getAttribute('data-id');
+      document.location.replace(`/update/${id}`); 
+    }
+  };
+
   document
     .querySelector('.new-blog-form')
     .addEventListener('submit', newFormHandler);
@@ -44,4 +51,8 @@ const newFormHandler = async (event) => {
   document
     .querySelector('.blog-list')
     .addEventListener('click', delButtonHandler);
+
+  document
+  .querySelector('.blog-list')
+  .addEventListener('click', updateButtonHandler);
   

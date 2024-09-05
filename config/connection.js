@@ -10,12 +10,12 @@ const sequelize = process.env.DB_URL
     {
       host: 'localhost',
       dialect: 'postgres',
-      // dialectOptions: {
-      //   ssl: {
-      //     require: true,
-      //     rejectUnauthorized: false, // This is needed for Render's PostgreSQL
-      //   },
-      // },
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false, // This is needed for Render's PostgreSQL
+        },
+      },
     }
   );
 

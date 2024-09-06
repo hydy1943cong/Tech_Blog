@@ -69,7 +69,7 @@ router.put('/update/:id', withAuth, async (req, res) => {
       res.status(404).json({ message: 'No blog found with this id' });
     }
   } catch (err) {
-    console.error('Error in PUT route:', err); // Improved logging
+    console.error('Error in PUT route:', err); 
     res.status(500).json({ error: 'Failed to update blog', details: err });
   }
 });

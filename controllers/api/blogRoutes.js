@@ -42,7 +42,8 @@ router.get('/update/:id', withAuth, async (req, res) => {
     if (!blog) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    res.render('update', { blog });
+    const blogObject = blog.toJSON();
+    res.render('update', { blog: blogObject });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -52,17 +53,26 @@ router.get('/update/:id', withAuth, async (req, res) => {
 
 router.put('/update/:id', withAuth, async (req, res) => {
   try {
-    const [updated] = await Blog.update(req.body, {
-      where: { id: req.params.id },
-    });
-    if (updated) {
-      res.status(200).json({ message: 'Blog updated' });
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    console.log(`Updating blog with ID: ${id}, Title: ${title}, Content: ${content}`);
+
+    const [updatedRowsCount] = await Blog.update(
+      { title, content },
+      { where: { id: id } }
+    );
+
+    if (updatedRowsCount > 0) {
+      res.status(200).json({ message: 'Blog updated successfully' });
     } else {
-      res.status(404).json({ message: 'Blog not found' });
+      res.status(404).json({ message: 'No blog found with this id' });
     }
   } catch (err) {
-    res.status(500).json(err);
+    console.error('Error in PUT route:', err); // Improved logging
+    res.status(500).json({ error: 'Failed to update blog', details: err });
   }
 });
+
 
 module.exports = router;

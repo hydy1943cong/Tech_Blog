@@ -34,41 +34,32 @@ router.delete('/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get('/update/:id', async (req, res) => {
-  try {
-    const blogData = await Blog.findByPk(req.params.id);
-    if (!blogData) {
-      res.status(404).json({ message: 'No blog found with this id!' });
-      return;
-    }
 
-    const blog = blogData.get({ plain: true });
-    res.render('update', { blog, logged_in: req.session.logged_in });
+
+router.get('/update/:id', withAuth, async (req, res) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+    res.render('update', { blog });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.put('/:id', async (req, res) => {
+
+
+router.put('/update/:id', withAuth, async (req, res) => {
   try {
-    const blogData = await Blog.update(
-      {
-        title: req.body.title,
-        content: req.body.content,
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-
-    if (!blogData[0]) {
-      res.status(404).json({ message: 'No blog found with this id!' });
-      return;
+    const [updated] = await Blog.update(req.body, {
+      where: { id: req.params.id },
+    });
+    if (updated) {
+      res.status(200).json({ message: 'Blog updated' });
+    } else {
+      res.status(404).json({ message: 'Blog not found' });
     }
-
-    res.status(200).json(blogData);
   } catch (err) {
     res.status(500).json(err);
   }

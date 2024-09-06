@@ -29,16 +29,16 @@
     <h3>Current Blogs:</h3>
 
     {{#each blogs as |blog|}}
-    <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/blog/{{blog.id}}">{{blog.title}}</a></h4>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-warning" data-id="{{blog.id}}">Update</button>
-        <button class="btn btn-sm btn-danger" data-id="{{blog.id}}">DELETE</button>
-      </div>
+  <div class="row mb-2">
+    <div class="col-md-8">
+      <h4><a href="/blog/{{blog.id}}">{{blog.title}}</a></h4>
     </div>
-    {{/each}}
+    <div class="col-md-4">
+      <button class="btn btn-sm btn-warning btn-update" data-id="{{blog.id}}">Update</button>
+      <button class="btn btn-sm btn-danger btn-delete" data-id="{{blog.id}}">DELETE</button>
+    </div>
+  </div>
+{{/each}}
   </div>
   {{/if}}
 </div>
